@@ -11,6 +11,9 @@ dotenv.config({ path: "./config/config.env" });
 //Connecting to database
 connectDB();
 
+// Setup bodypaser
+app.use(express.json());
+
 // Importing routes
 const jobs = require("./routes/jobs");
 
