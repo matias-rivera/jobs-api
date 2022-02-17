@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 const connectDB = require("./config/database");
 const errorMiddleware = require("./middlewares/errors");
@@ -23,10 +24,15 @@ connectDB();
 // Setup bodypaser
 app.use(express.json());
 
+// Set cookie parser
+app.use(cookieParser());
+
 // Importing routes
 const jobs = require("./routes/jobs");
+const auth = require("./routes/auth");
 
 app.use("/api/v1", jobs);
+app.use("/api/v1", auth);
 
 // Handle unhandled routes
 app.all("*", (req, res, next) => {
