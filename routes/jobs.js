@@ -10,11 +10,16 @@ const {
   deleteJob,
   getJob,
   jobStats,
+  applyJob,
 } = require("../controllers/jobsController");
 
 const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
 router.route("/jobs/:zipcode/zipcode/:distance/distance").get(getJobsInRadius);
+
+router
+  .route("/jobs/:id/apply")
+  .put(isAuthenticatedUser, authorizeRoles("user"), applyJob);
 
 router
   .route("/jobs/:id")

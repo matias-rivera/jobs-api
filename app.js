@@ -3,6 +3,7 @@ const app = express();
 
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 
 const connectDB = require("./config/database");
 const errorMiddleware = require("./middlewares/errors");
@@ -27,12 +28,17 @@ app.use(express.json());
 // Set cookie parser
 app.use(cookieParser());
 
+// Handle file uploads
+app.use(fileUpload());
+
 // Importing routes
 const jobs = require("./routes/jobs");
 const auth = require("./routes/auth");
+const users = require("./routes/users");
 
 app.use("/api/v1", jobs);
 app.use("/api/v1", auth);
+app.use("/api/v1", users);
 
 // Handle unhandled routes
 app.all("*", (req, res, next) => {
